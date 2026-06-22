@@ -23,16 +23,18 @@ class Plant:
 
         def inc_shade(self):
             self._shade_call += 1
-            print(f"{self._shade_call}")
 
         def display(self):
             print(
                 f"Stats: {self._grow_call} grow, "
                 f"{self._age_call} age, "
-                f"{self._show_call} show \n")
+                f"{self._show_call} show"
+            )
+
 
     def age_plant(self, days):
         self.age += days
+        self.stats.inc_age()
 
     @staticmethod
     def check_age(age):
@@ -40,14 +42,11 @@ class Plant:
 
     @classmethod
     def anonymous(cls):
-        return cls("unknow")
+        return cls("unknown", 0, 0)
 
     def show(self):
         print(f"{self.name}: {self.height}cm, {self.age} days old")
-
-    def grow(self, valor):
-        self.height += valor
-        self.stats.inc_grow()
+        self.stats.inc_show()
 
 
 class Flower(Plant):
@@ -60,56 +59,100 @@ class Flower(Plant):
         self.bloomed = True
 
     def grow_flower(self, valor):
-        super().grow(valor)
+        self.height += valor
         self.stats.inc_grow()
 
     def show(self):
         super().show()
-        print(f" Color: {self.color}")
-        self.stats.inc_show()
+        print(f"Color: {self.color}")
         if self.bloomed:
-            print(f" {self.name} is blooming beautifully!")
+            print(f"{self.name} is blooming beautifully!")
         else:
-            print(f" {self.name} has not blommed yet")
+            print(f"{self.name} has not bloomed yet")
 
 
 class Tree(Plant):
     def __init__(self, name, height, age, trunk_diameter):
         super().__init__(name, height, age)
         self.trunk_diameter = trunk_diameter
-        self.shade_count = 0
 
     def show(self):
         super().show()
-        self.stats.inc_show()
         print(f"Trunk diameter: {self.trunk_diameter}cm")
 
-    def pruduce_shade(self):
+    def produce_shade(self):
         self.stats.inc_shade()
-        Oak.stats.display()
-        print(f"Tree {self.name} now produces a shade of {self.height}cm long",
-              "and {self.trunk_diameter}cm wide")
+        
+        self.stats.display()
+        print(f"{self.stats._shade_call} shade")
+
+        print("[asking the oak to produce shade]")
+        print(
+            f"Tree {self.name} now produces a shade of "
+            f"{self.height}cm long and {self.trunk_diameter}cm wide."
+        )
+
+        print(f"[statistics for {self.name}]")
+        self.stats.display()
+        print(f"{self.stats._shade_call} shade")
 
 
-print("=== Garden statiscs ===")
-print("Check year-old")
-print(f"Is 30 days more than a year --> {Plant.check_age(30)}")
-print(f"Is 30 days more than a year --> {Plant.check_age(400)}")
+class Seed(Flower):
+    def __init__(self, name, height, age, color):
+        super().__init__(name, height, age, color)
+        self.seeds = 0
+
+    def bloom(self):
+        super().bloom()
+        self.seeds = 42
+
+    def show(self):
+        super().show()
+        print(f"Seeds: {self.seeds}")
+
+
+print("=== Garden statistics ===")
+
+print("=== Check year-old")
+print(f"Is 30 days more than a year? -> {Plant.check_age(30)}")
+print(f"Is 400 days more than a year? -> {Plant.check_age(400)}")
 print("\n")
+
 print("=== Flower")
 rose = Flower("Rose", 15.0, 10, "red")
 rose.show()
-print("[Asking the rose to grow and bloom]")
+print("[statistics for Rose]")
+rose.stats.display()
+print("[asking the rose to grow and bloom]")
 rose.bloom()
 rose.grow_flower(8)
 rose.show()
-print(f"Statics for {rose.name}")
+print("[statistics for Rose]")
 rose.stats.display()
 print("\n")
-print("=== Tree")
-Oak = Tree("Oak", 200, 365, 5.0)
-Oak.show()
-print(f"Statics for {Oak.name}")
-# Oak.grow_tree(2)
-Oak.pruduce_shade()
 
+print("=== Tree")
+oak = Tree("Oak", 200.0, 365, 5.0)
+oak.show()
+print("[statistics for Oak]")
+oak.produce_shade()
+print("\n")
+
+print("=== Seed")
+sunflower = Seed("Sunflower", 80.0, 45, "yellow")
+sunflower.show()
+print("[make sunflower grow, age and bloom]")
+sunflower.height = 110.0
+sunflower.age_plant(20)
+sunflower.bloom()
+sunflower.show()
+print("[statistics for Sunflower]")
+sunflower.stats.display()
+print("\n")
+
+
+print("=== Anonymous")
+unknown = Plant.anonymous()
+unknown.show()
+print("[statistics for Unknown plant]")
+unknown.stats.display()
