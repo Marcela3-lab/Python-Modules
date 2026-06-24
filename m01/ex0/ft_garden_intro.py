@@ -1,10 +1,13 @@
-if __name__ == "__main__":
+def ft_garden_intro() -> None:
+    name = "Rose"
+    height = 25
+    age = 30
     print("=== Welcome to My Garden ===")
-    plant = "Rose"
-    height = "25cm"
-    age = "30 days"
+    print(f"Plant: {name}")
+    print(f"Height: {height}cm")
+    print(f"Age: {age} days\n")
+    print("=== End of program ===")
 
-    print(plant)
-    print(height)
-    print(age)
-    print("=== End of Program ===")
+
+if __name__ == "__main__":
+    ft_garden_intro()

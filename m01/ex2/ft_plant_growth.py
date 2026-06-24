@@ -1,23 +1,28 @@
 class Plant():
-    def __init__(self, name, height, age):
+    def __init__(self, name, height, age) -> None:
         self.name = name
         self.height = height
-        self.agee = age
+        self.age_days = age
 
-    def grow(self):
+    def grow(self) -> None:
         self.height += 0.8
 
-    def age(self):
-        self.agee += 1
+    def age(self) -> None:
+        self.age_days += 1
 
 
 plant = Plant("Rose", 25.0, 30)
 grow_init = plant.height
 print("=== Garden Plant Growth ===")
-for i in range(7):
-    print("=== Day 1 ===")
-    print(f"{plant.name}: {round(plant.height,1)}cm, {plant.agee} days old")
+for i in range(1, 8):
+    print(f"=== Day {i} ===")
+    print("{}: {}cm, {} days old".format(
+        plant.name,
+        round(plant.height, 1),
+        plant.age_days
+    ))
+
     plant.grow()
     plant.age()
 res = plant.height - grow_init
-print(f"Growth this week: {round(res,1)}")
+print(f"Growth this week: {round(res, 1)}")
