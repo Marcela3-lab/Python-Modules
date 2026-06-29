@@ -1,22 +1,28 @@
 class GardenError (Exception):
-    def __init__(self, message = ""):
-        ...
+    def __init__(self,message = "Caught"):
 
 
 class PlantError(GardenError):
-    def __init__(self):
-        ...
+    super.__init__(self,)
+    def test_garden_error():
+        raise GardenError("The tomato plant is wilting!")
 
 
 class WaterError(GardenError):
-    def __init__(self):
-        ...
+    def test_garden_error():
+        raise WaterError("Not enough water in the tank!")
 
 
+print("=== Custom Garden Error Demo ===")
+print("Testing PlantError")
+print(f"Caught PlantError: {PlantError.test_garden_error()}")
 
-#class DeuRuimError(Exception):
-#     def __str__(self):
-#         return "Batata"
+print("Testing WaterError")
+print(f"Caught WaterError: {PlantError.test_garden_error()}")
+
+
+print("Testing  catching all garden errors...")
+print(f"Caught GardenErro: {}")
 
 
 # if __name__ == "__main__":
