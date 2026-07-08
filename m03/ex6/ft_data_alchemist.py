@@ -1,5 +1,6 @@
 import random
 
+
 def data_alchemist() -> None:
     players = [
         "Alice",

@@ -6,7 +6,7 @@ print("=== Command Quest ===")
 def verify_arguments() -> None:
     count_arg = 1
     print(f"Program name: {sys.argv[0]}")
-    if len(sys.argument) == 0:
+    if len(sys.argv) == 0:
         print("No arguments provided!")
         print("Total arguments: 1")
         return

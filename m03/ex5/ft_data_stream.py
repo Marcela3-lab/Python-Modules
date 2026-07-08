@@ -4,7 +4,15 @@ from typing import Generator
 
 def gen_event() -> Generator:
     players = ["alice", "bob", "charlie", "dylan"]
-    actions = ["run", "eat", "sleep", "move", "grab", "release", "climb", "swim", "use"]
+    actions = ["run",
+               "eat",
+               "sleep",
+               "move",
+               "grab",
+               "release",
+               "climb",
+               "swim",
+               "use"]
 
     while True:
         yield (

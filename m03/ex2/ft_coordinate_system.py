@@ -24,11 +24,18 @@ def get_player_pos() -> tuple[float, ...]:
         return (x, y, z)
 
 
+def p_len(value):
+    cont = 0
+    for _ in value:
+        cont += 1
+    return cont
+
+
 def second_set() -> tuple[float, ...]:
     while True:
         pos = input("Enter new coordinates as floats in format 'x,y,z': ")
         parts = pos.split(",")
-        if len(parts) != 3:
+        if p_len(parts) != 3:
             print("You must enter 3 values.")
             continue
         coords = []
@@ -53,4 +60,5 @@ if __name__ == "__main__":
     dz = pontos[2] - pontos[5]
     distancia_d = math.sqrt(dx**2 + dy**2 + dz**2)
     print()
-    print(f"Distance between the 2 sets of coordinates {round(distancia_d,4)}")
+    print("Distance between the 2 sets")
+    (f"of coordinates {round(distancia_d, 4)}")

@@ -1,8 +1,22 @@
 import random
 
+
 def gen_player_achievements():
-    achievements = {"Crafting Genius", "Strategist", "World Savior", "Speed Runner", "Survivor", "Master Explorer",
-    "Treasure Hunter", "Unstoppable", "First Steps", "Collector Supreme", "Untouchable", "Sharp Mind", "Boss Slayer"}
+    achievements = [
+        "Crafting Genius",
+        "Strategist",
+        "World Savior",
+        "Speed Runner",
+        "Survivor",
+        "Master Explorer",
+        "Treasure Hunter",
+        "Unstoppable",
+        "First Steps",
+        "Collector Supreme",
+        "Untouchable",
+        "Sharp Mind",
+        "Boss Slayer",
+                    ]
     Alice = set(random.sample(list(achievements), 6))
     Bob = set(random.sample(list(achievements), 7))
     Charlie = set(random.sample(list(achievements), 9))
@@ -14,7 +28,7 @@ def gen_player_achievements():
     print(f"Player Dylan: {Dylan}")
     print(f"All distinct achievements: {achievements}")
     print()
-    
+
     common = Alice.intersection(Bob, Charlie, Dylan)
     print(f"Common achievements: {common}")
 
@@ -39,6 +53,7 @@ def gen_player_achievements():
     print(f"Bob is missing: {missing_bob}")
     print(f"Charlie is missing: {missing_charlie}")
     print(f"Dylan is missing: {missing_dylan}")
+
 
 if __name__ == "__main__":
     print("=== Achievement Tracker System ===")

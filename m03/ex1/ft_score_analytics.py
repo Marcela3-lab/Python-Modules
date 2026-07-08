@@ -2,11 +2,13 @@ import sys
 
 print("=== Player Score Analytics ===")
 
-scores = []
+scores: list[int] = []
+
 
 def verify_score() -> None:
     if len(sys.argv) == 1:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print("No scores provided. Usage: python3 ")
+        ("ft_score_analytics.py <score1> <score2> ...")
         return
 
     for arg in sys.argv[1:]:
@@ -17,7 +19,8 @@ def verify_score() -> None:
             print(f"Invalid parameter: '{arg}'")
 
     if len(scores) == 0:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print("No scores provided. Usage: python3 ")
+        ("ft_score_analytics.py <score1> <score2> ...")
         return
 
     total_players = len(scores)
@@ -33,5 +36,6 @@ def verify_score() -> None:
     print(f"High score: {high_score}")
     print(f"Low score: {low_score}")
     print(f"Score range: {score_range}")
+
 
 verify_score()
