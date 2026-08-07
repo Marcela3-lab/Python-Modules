@@ -11,7 +11,11 @@ def verify_arguments() -> None:
         print("Total arguments: 1")
         return
     print(f"Arguments received: {len(sys.argv)}")
-    while count_arg <= len(sys.argv):
+    while count_arg < len(sys.argv):
         print(f"Arguments {count_arg}: {sys.argv[count_arg]}")
         count_arg = count_arg + 1
     print(f"Total arguments: {len(sys.argv)}")
+
+
+if __name__ == '__main__':
+    verify_arguments()

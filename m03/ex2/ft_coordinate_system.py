@@ -4,13 +4,12 @@ import math
 def get_player_pos() -> tuple[float, ...]:
     while True:
         pos = input("Enter new coordinates as floats in format 'x,y,z': ")
-        parts = pos.split(",")
-        if len(parts) != 3:
+        if len(pos) != 3:
             print("You must enter 3 values.")
             continue
         coords = []
         try:
-            for part in parts:
+            for part in pos:
                 coords.append(float(part))
         except ValueError:
             print(f"Error: '{part}' is not a valid float.")

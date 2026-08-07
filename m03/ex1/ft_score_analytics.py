@@ -7,8 +7,9 @@ scores: list[int] = []
 
 def verify_score() -> None:
     if len(sys.argv) == 1:
-        print("No scores provided. Usage: python3 ")
-        ("ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. Usage: python3 ",
+            "ft_score_analytics.py <score1> <score2> ...")
         return
 
     for arg in sys.argv[1:]:
@@ -19,8 +20,9 @@ def verify_score() -> None:
             print(f"Invalid parameter: '{arg}'")
 
     if len(scores) == 0:
-        print("No scores provided. Usage: python3 ")
-        ("ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. Usage: python3 "
+            "ft_score_analytics.py <score1> <score2> ...")
         return
 
     total_players = len(scores)
@@ -30,6 +32,7 @@ def verify_score() -> None:
     low_score = min(scores)
     score_range = high_score - low_score
 
+    print(f"Scores Processed: {scores}")
     print(f"Total players: {total_players}")
     print(f"Total score: {total_score}")
     print(f"Average score: {average_score}")
@@ -38,4 +41,5 @@ def verify_score() -> None:
     print(f"Score range: {score_range}")
 
 
-verify_score()
+if __name__ == '__main__':
+    verify_score()
