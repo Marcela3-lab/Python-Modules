@@ -1,22 +1,12 @@
 import random
 
-
-def gen_player_achievements():
-    achievements = [
-        "Crafting Genius",
-        "Strategist",
-        "World Savior",
-        "Speed Runner",
-        "Survivor",
-        "Master Explorer",
-        "Treasure Hunter",
-        "Unstoppable",
-        "First Steps",
-        "Collector Supreme",
-        "Untouchable",
-        "Sharp Mind",
-        "Boss Slayer",
-                    ]
+def gen_player_achievements() -> None:
+    achievements = {
+    "Crafting Genius", "Strategist", "World Savior", "Speed Runner",
+    "Survivor", "Master Explorer", "Treasure Hunter", "Unstoppable",
+    "First Steps", "Collector Supreme", "Untouchable", "Sharp Mind",
+    "Boss Slayer", "Night Owl", "Iron Will", "Perfectionist",
+}
     Alice = set(random.sample(list(achievements), 6))
     Bob = set(random.sample(list(achievements), 7))
     Charlie = set(random.sample(list(achievements), 9))
@@ -37,7 +27,7 @@ def gen_player_achievements():
     alice_unique = Alice.difference(Bob, Charlie, Dylan)
     bob_unique = Bob.difference(Alice, Charlie, Dylan)
     charlie_unique = Charlie.difference(Alice, Bob, Dylan)
-    dylan_unique = Dylan.difference
+    dylan_unique = Dylan.difference(Alice, Bob, Charlie)
     print(f"Alice unique: {alice_unique}")
     print(f"Bob unique: {bob_unique}")
     print(f"Charlie unique: {charlie_unique}")

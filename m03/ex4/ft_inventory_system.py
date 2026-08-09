@@ -1,53 +1,56 @@
 import sys
 
-inventory = {}
-order = []
+def parse_inventory(args: list) -> dict:
+    inventory = {}
 
-for arg in sys.argv[1:]:
-    if arg.count(":") != 1:
-        print(f"Error - invalid parameter '{arg}'")
-        continue
+    for arg in args:
+        if ":" not in arg:
+            print(f"Error - invalid parameter '{arg}'")
+            continue
 
-    item, quantity = arg.split(":")
+        name, quat = arg.split(":")
 
-    if item in inventory:
-        print(f"Redundant item '{item}' - discarding")
-        continue
+        if name in inventory.keys():
+            print(f"Redundant item '{name}' - discarding")
+            continue
 
-    try:
-        quantity = int(quantity)
-    except ValueError as e:
-        print(f"Quantity error for '{item}': {e}")
-        continue
+        try:
+            qty = int(quat)
+        except ValueError as e:
+            print(f"Quantity error for '{name}': {e}")
+            continue
 
-    inventory[item] = quantity
-    order.append(item)
+        inventory.update({name: qty})
 
-print("=== Inventory System Analysis ===")
-print(f"Got inventory: {inventory}")
-print(f"Item list: {list(inventory.keys())}")
+    return inventory
 
-total_quantity = sum(inventory.values())
-print(f"Total quantity of the {len(inventory)} items: {total_quantity}")
 
-if total_quantity > 0:
-    for item in inventory:
-        percentage = round((inventory[item] / total_quantity) * 100, 1)
-        print(f"Item {item} represents {percentage}%")
+if __name__ == "__main__":
+    print("=== Inventory System Analysis ===")
+    args = sys.argv[1:]
+    inventory = parse_inventory(args)
+    print(f"Got inventory: {inventory}")
+    print(f"Item list: {list(inventory.keys())}")
+    print(f"Total quantity of the '{len(inventory)}' items: {sum(inventory.values())}")
+    total = sum(inventory.values())
 
-most_item = order[0]
-least_item = order[0]
+    for item in inventory.keys():
+        qty = inventory[item]
+        percentagem = round(qty/total*100,1)
+        print(f"Item '{item}' represents {percentagem}")
 
-for item in order:
-    if inventory[item] > inventory[most_item]:
-        most_item = item
-    if inventory[item] < inventory[least_item]:
-        least_item = item
+    items = list(inventory.keys())
+    most_item = items[0]
+    least_item = items[0]
 
-print(f"Item most abundant: {most_item} with quantity {inventory[most_item]}")
-print(f"Item least abundant: {least_item} with quantity"
-      f"{inventory[least_item]}")
+    for item in inventory.keys():
+        if inventory[item] > inventory[most_item]:
+            most_item = item
+        if inventory[item] < inventory[least_item]:
+            least_item = item
 
-inventory.update({"magic_item": 1})
+    print(f"Item most abundant: {most_item} with quantity {inventory[most_item]}")
+    print(f"Item least abundant: {least_item} with quantity {inventory[least_item]}")
 
-print(f"Updated inventory: {inventory}")
+    inventory.update({"magic_item": 1})
+    print(f"Updated inventory: {inventory}")
