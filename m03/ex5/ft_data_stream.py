@@ -23,9 +23,10 @@ def gen_event() -> typing.Generator:
 
 def consume_event(events: list) -> typing.Generator:
     while len(events) > 0:
-         event=random.choice(events)
-         events.remove(event)
-         yield event
+        event = random.choice(events)
+        events.remove(event)
+        yield event
+
 
 if __name__ == "__main__":
     print("=== Game Data Stream Processor ===")
@@ -39,9 +40,9 @@ if __name__ == "__main__":
     lista = []
     item = gen_event()
     for i in range(10):
-        lista.append(next(item)) 
-    print(f"Built list of 10 events: {lista}")
+        lista.append(next(item))
 
+    print(f"Built list of 10 events: {lista}")
 
     for event in consume_event(lista):
         print(f"Got event from list: {event}")

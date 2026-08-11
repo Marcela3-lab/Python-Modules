@@ -1,12 +1,13 @@
 import random
 
+
 def gen_player_achievements() -> None:
     achievements = {
-    "Crafting Genius", "Strategist", "World Savior", "Speed Runner",
-    "Survivor", "Master Explorer", "Treasure Hunter", "Unstoppable",
-    "First Steps", "Collector Supreme", "Untouchable", "Sharp Mind",
-    "Boss Slayer", "Night Owl", "Iron Will", "Perfectionist",
-}
+        "Crafting Genius", "Strategist", "World Savior", "Speed Runner",
+        "Survivor", "Master Explorer", "Treasure Hunter", "Unstoppable",
+        "First Steps", "Collector Supreme", "Untouchable", "Sharp Mind",
+        "Boss Slayer", "Night Owl", "Iron Will", "Perfectionist",
+                    }
     Alice = set(random.sample(list(achievements), 6))
     Bob = set(random.sample(list(achievements), 7))
     Charlie = set(random.sample(list(achievements), 9))

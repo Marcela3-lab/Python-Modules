@@ -1,5 +1,6 @@
 import math
 
+
 def get_player_pos() -> tuple[float, float, float]:
     while True:
         x = input("Digite a primeira cordenada: 'x':")
@@ -18,6 +19,8 @@ def get_player_pos() -> tuple[float, float, float]:
                 print("Invalid syntax")
                 continue
         return (cx, cy, cz)
+
+
 if __name__ == "__main__":
     print("Get a first set of cordinates")
     pontos1 = get_player_pos()

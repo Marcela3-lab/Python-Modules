@@ -1,7 +1,8 @@
 import sys
 
+
 def parse_inventory(args: list) -> dict:
-    inventory = {}
+    inventory: dict[str, int] = {}
 
     for arg in args:
         if ":" not in arg:
@@ -31,12 +32,13 @@ if __name__ == "__main__":
     inventory = parse_inventory(args)
     print(f"Got inventory: {inventory}")
     print(f"Item list: {list(inventory.keys())}")
-    print(f"Total quantity of the '{len(inventory)}' items: {sum(inventory.values())}")
+    print(f"Total quantity of the '{len(inventory)}"
+          f"'items: {sum(inventory.values())}")
     total = sum(inventory.values())
 
     for item in inventory.keys():
         qty = inventory[item]
-        percentagem = round(qty/total*100,1)
+        percentagem = round(qty/total*100, 1)
         print(f"Item '{item}' represents {percentagem}")
 
     items = list(inventory.keys())
@@ -49,8 +51,10 @@ if __name__ == "__main__":
         if inventory[item] < inventory[least_item]:
             least_item = item
 
-    print(f"Item most abundant: {most_item} with quantity {inventory[most_item]}")
-    print(f"Item least abundant: {least_item} with quantity {inventory[least_item]}")
+    print(f"Item most abundant: {most_item} "
+          f"with quantity {inventory[most_item]}")
+    print(f"Item least abundant: {least_item} with "
+          f"quantity {inventory[least_item]}")
 
     inventory.update({"magic_item": 1})
     print(f"Updated inventory: {inventory}")
