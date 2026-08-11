@@ -1,12 +1,13 @@
 import sys
 import typing
 
+
 def read_archive(nome_arquivo: str) -> None:
     print("=== Cyber Archives Recovery & Preservation ===")
     print(f"Accessing file '{nome_arquivo}'")
 
     try:
-        arquivo = open(nome_arquivo)
+        arquivo: typing.IO[str] = open(nome_arquivo)
     except FileNotFoundError as e:
         print(f"Error opening file '{nome_arquivo}': {e}")
     except PermissionError as e:
@@ -24,6 +25,7 @@ def read_archive(nome_arquivo: str) -> None:
         novo_conteudo = "\n".join(linhas_char)
         print(" ")
         print("Transform data:")
+        print("---\n\n")
         print(novo_conteudo)
 
         print("---\n\n")

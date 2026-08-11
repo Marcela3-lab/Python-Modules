@@ -1,16 +1,19 @@
 import sys
 import typing
 
+
 def read_archive(nome_arquivo: str) -> None:
     print("=== Cyber Archives Recovery & Preservation ===")
     print(f"Accessing file '{nome_arquivo}'")
 
     try:
-        arquivo = open(nome_arquivo)
+        arquivo: typing.IO[str] = open(nome_arquivo)
     except FileNotFoundError as e:
-        sys.stderr.write(f"[STDERR] Error opening file '{nome_arquivo}': {e}\n")
+        sys.stderr.write(f"[STDERR] Error opening"
+                         f"file '{nome_arquivo}': {e}\n")
     except PermissionError as e:
-        sys.stderr.write(f"[STDERR] Error opening file '{nome_arquivo}': {e}\n")
+        sys.stderr.write(f"[STDERR] Error opening file"
+                         f"'{nome_arquivo}': {e}\n")
     else:
         conteudo = arquivo.read()
         print("---\n")
@@ -37,10 +40,12 @@ def read_archive(nome_arquivo: str) -> None:
             try:
                 novo_arquivo = open(novo_name, "w")
             except PermissionError as e:
-                sys.stderr.write(f"[STDERR] Error opening file '{novo_name}' : {e}\n")
+                sys.stderr.write(f"[STDERR] Error opening"
+                                 f"file '{novo_name}' : {e}\n")
                 print("Data not saved.")
             except FileNotFoundError as e:
-                sys.stderr.write(f"[STDEER] Error opening file '{novo_name}': {e}\n")
+                sys.stderr.write(f"[STDEER] Error opening"
+                                 f"file '{novo_name}': {e}\n")
                 print("Data not saved")
             else:
                 novo_arquivo.write(novo_conteudo)
