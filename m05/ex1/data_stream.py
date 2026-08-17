@@ -91,6 +91,9 @@ class DataStream():
             self.processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
+        if len(self.processors) == 0:
+            print("No processor found, no data")
+            return
         for item in stream:
             encontrado = False
             for proc in self.processors:
@@ -99,56 +102,90 @@ class DataStream():
                     encontrado = True
                     break;
             if not encontrado:
-                print("No processor found, no data")
+                print(f"DataStream error - Can't process element in stream: {item}")
     
     def print_processors_stats(self) -> None:
-        for proc in self.processors:
-            ...
-
+            for proc in self.processors:
+                nome = type(proc).__name__.replace("Processor", " Processor")
+                restant = len(proc.dados)
+                total = proc.rank + len(proc.dados)
+                print(f"{nome}: total {total} items processed, remaining {restant} on processor")
 
 if __name__ == "__main__":
-    print("=== Code Nexus - Data Processor ===")
+    print("=== Code Nexus - Data Stream ===")
     print(" ")
     print(" ")
-    print("Testing Numeric Processor...")
-    numeric = NumericProcessor()
-    print(f"Trying to validate input '42': {numeric.validate(42)}")
-    print(f"Trying to validate input 'Hello': {numeric.validate('Hello')}")
-    print("Test invalid ingestion of string 'foo' without prior validation:")
-    try:
-        numeric.ingest('foo')
-    except ValueError as e:
-        print(f"Got exception: {e}")
-    print("Processing data: [1, 2, 3, 4, 5]")
-    numeric.ingest([1,2,3,4,5])
-    print("Extracting 3 values...")
-    for _ in range(3):
-        rank, valor = numeric.output()
-        print(f"Numeric value {rank}: {valor}")
-    print(" ")
-    print("Testing Text Processor...")
-    text= TextProcessor()
-    print(f"Trying to validate input '42': {text.validate(42)}")
-    print(f"Processing data: {['Hello', 'Nexus', 'World']}")
-    text.ingest(['Hello', 'Nexus', 'World'])
-    print("Extracting 1 value...")
-    for _ in range(1):
-        rank, valor = text.output()
-        print(f"Text value {rank}: {valor}")
-    print(" ")
-    print(" ")
-    print("Testing Log Processor...")
-    log = LogProcessor()
-    print(f"Trying to validate input 'Hello': {log.validate('Hello')}")
-    dados_log = [
-    {"log_level": "NOTICE", "log_message": "Connection to server"},
-    {"log_level": "ERROR", "log_message": "Unauthorized access!!"},
-                ]
-    print(f"Processing data: {dados_log}")
-    log.ingest(dados_log)
-
-    print("Extracting 2 values...")
-    for _ in range(2):
-        rank, valor = log.output()
-        print(f"Log entry {rank}: {valor}")
+    print("Initialize Data Stream...")
+    data = DataStream()
+    stream = ['k']
     
+
+    print("== DataStream c ==")
+    data.process_stream(stream)
+    print(" ")
+    print(" ")
+    print("Resgistering Numeric Processor")
+    print(" ")
+    print(" ")
+    print(
+    "Send first batch of data on stream: "
+    "['Hello world', [3.14, -1, 2.71], "
+    "[{'log_level': 'WARNING', "
+    "'log_message': 'Telnet access! Use ssh instead'}, "
+    "{'log_level': 'INFO', "
+    "'log_message': 'User wil is connected'}], "
+    "42, ['Hi', 'five']]"
+)
+    numeric = NumericProcessor()
+    text = TextProcessor()
+    log = LogProcessor()
+    data.register_processor(numeric)
+    
+    stream = [
+    "Hello world",
+    [3.14, -1, 2.71],
+    [
+        {"log_level": "WARNING", "log_message": "Telnet access! Use ssh instead"},
+        {"log_level": "INFO", "log_message": "User wil is connected"},
+    ],
+    42,
+    ["Hi", "five"],
+]
+    data.process_stream(stream)
+    print("== DataStream statistics ==")
+    data.print_processors_stats()
+    print(" ")
+    print(" ")
+    print("Registering other data processors")
+    print("Send the same batch again")
+    print("== DataStream statistics ==")
+
+    stream = [
+        "Hello world",
+        [3.14, -1, 2.71],
+        [
+            {"log_level": "WARNING", "log_message": "Telnet access! Use ssh instead"},
+            {"log_level": "INFO", "log_message": "User wil is connected"},
+        ],
+        42,
+        ["Hi", "five"],
+    ]
+    data.register_processor(text)
+    data.register_processor(log)
+    data.process_stream(stream)
+    data.print_processors_stats()
+    print("Consume smoe elements from the data processors: Numeric: 3, Text 2, Log 1")
+    print("== DataStream statistics ==")
+    print(" ")
+    print(" ")
+   
+    for _ in range(3):
+        numeric.output()
+
+    for _ in range(2):
+        text.output()
+
+    for _ in range(1):
+        log.output()
+
+    data.print_processors_stats()
