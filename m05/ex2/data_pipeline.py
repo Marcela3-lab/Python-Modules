@@ -155,7 +155,6 @@ class JSONExportPlugin:
 if __name__ == "__main__":
     print("=== Code Nexus - Data Pipeline ===")
     print(" ")
-    print(" ")
     print("Initialize Data Stream...")
     print("")
     print("== DataStream statistics ==")

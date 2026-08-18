@@ -125,17 +125,13 @@ class DataStream():
 if __name__ == "__main__":
     print("=== Code Nexus - Data Stream ===")
     print(" ")
-    print(" ")
     print("Initialize Data Stream...")
     data = DataStream()
     k = ['k']
 
-    print("== DataStream c ==")
     data.process_stream(k)
     print(" ")
-    print(" ")
     print("Resgistering Numeric Processor")
-    print(" ")
     print(" ")
     print(
         "Send first batch of data on stream: "
@@ -163,12 +159,14 @@ if __name__ == "__main__":
         ["Hi", "five"],
     ]
     data.process_stream(stream)
+    print(" ")
     print("== DataStream statistics ==")
     data.print_processors_stats()
     print(" ")
     print(" ")
     print("Registering other data processors")
     print("Send the same batch again")
+    print(" ")
     print("== DataStream statistics ==")
 
     stream1: list[Any] = [
@@ -186,10 +184,10 @@ if __name__ == "__main__":
     data.register_processor(log)
     data.process_stream(stream1)
     data.print_processors_stats()
-    print("Consume smoe elements from the data "
+    print("Consume some elements from the data "
           "processors: Numeric: 3, Text 2, Log 1")
-    print("== DataStream statistics ==")
     print(" ")
+    print("== DataStream statistics ==")
     print(" ")
 
     for _ in range(3):
