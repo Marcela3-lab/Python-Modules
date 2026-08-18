@@ -2,11 +2,13 @@ from abc import ABC, abstractmethod
 from typing import Any, Union
 from typing import Protocol
 
+
 class DataProcessor(ABC):
 
     def __init__(self) -> None:
         self.dados: list[str] = []
         self.rank = 0
+
     @abstractmethod
     def validate(self, data: Any) -> bool:
         ...
@@ -26,8 +28,9 @@ class DataProcessor(ABC):
             resultado.append((rank_atual, valor))
         return resultado
 
+
 class NumericProcessor(DataProcessor):
-    def validate(self, data: Any) ->bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, (int, float)):
             return True
         if (isinstance(data, list)):
@@ -36,6 +39,7 @@ class NumericProcessor(DataProcessor):
                     return False
             return True
         return False
+
     def ingest(self, data: Union[int, float, list]) -> None:
         if not self.validate(data):
             raise ValueError("Improper numeric data")
@@ -45,8 +49,9 @@ class NumericProcessor(DataProcessor):
         else:
             self.dados.append(str(data))
 
+
 class TextProcessor(DataProcessor):
-    def validate(self, data: Any) ->bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, (str)):
             return True
         if (isinstance(data, list)):
@@ -55,14 +60,16 @@ class TextProcessor(DataProcessor):
                     return False
             return True
         return False
-    def ingest(self, data: Union[str,list]) -> None:
+
+    def ingest(self, data: Union[str, list]) -> None:
         if not self.validate(data):
             raise ValueError("Improper text data")
         if isinstance(data, list):
             for item in data:
                 self.dados.append(item)
         else:
-                self.dados.append(str(data))
+            self.dados.append(str(data))
+
 
 class LogProcessor(DataProcessor):
     def validate(self, data):
@@ -89,16 +96,18 @@ class LogProcessor(DataProcessor):
             texto = f"{data['log_level']}: {data['log_message']}"
             self.dados.append(texto)
 
+
 class ExportPlugin(Protocol):
     def process_output(self, data: list[tuple[int, str]]) -> None:
         ...
-        
+
+
 class DataStream():
-    def __init__ (self)->None:
-            self.processors: list[DataProcessor] = []
+    def __init__(self) -> None:
+        self.processors: list[DataProcessor] = []
 
     def register_processor(self, proc: DataProcessor) -> None:
-            self.processors.append(proc)
+        self.processors.append(proc)
 
     def process_stream(self, stream: list[Any]) -> None:
         if len(self.processors) == 0:
@@ -110,16 +119,18 @@ class DataStream():
                 if proc.validate(item):
                     proc.ingest(item)
                     encontrado = True
-                    break;
+                    break
             if not encontrado:
-                print(f"DataStream error - Can't process element in stream: {item}")
-    
+                print("DataStream error - Can't process"
+                      f"element in stream: {item}")
+
     def print_processors_stats(self) -> None:
-            for proc in self.processors:
-                nome = type(proc).__name__.replace("Processor", " Processor")
-                restant = len(proc.dados)
-                total = proc.rank + len(proc.dados)
-                print(f"{nome}: total {total} items processed, remaining {restant} on processor")
+        for proc in self.processors:
+            nome = type(proc).__name__.replace("Processor", " Processor")
+            restant = len(proc.dados)
+            total = proc.rank + len(proc.dados)
+            print(f"{nome}: total {total} items processed,"
+                  f"remaining {restant} on processor")
 
     def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
         for processor in self.processors:
@@ -133,6 +144,7 @@ class CSVExportPlugin:
         linha = ",".join(valores)
         print(f"CSV Output: {linha}")
 
+
 class JSONExportPlugin:
     def process_output(self, data: list[tuple[int, str]]) -> None:
         pares = [f'"item_{idx}": "{valor}"' for (idx, valor) in data]
@@ -145,37 +157,40 @@ if __name__ == "__main__":
     print(" ")
     print(" ")
     print("Initialize Data Stream...")
+    print("")
+    print("== DataStream statistics ==")
     data = DataStream()
-    data.process_stream(3)
+    data.process_stream([3, 3])
     print(" ")
     print(" ")
     print("Registering Processors")
     print(
-    "Send first batch of data on stream: "
-    "['Hello world', [3.14, -1, 2.71], "
-    "[{'log_level': 'WARNING', "
-    "'log_message': 'Telnet access! Use ssh instead'}, "
-    "{'log_level': 'INFO', "
-    "'log_message': 'User wil is connected'}], "
-    "42, ['Hi', 'five']]"
-)
+        "Send first batch of data on stream: "
+        "['Hello world', [3.14, -1, 2.71], "
+        "[{'log_level': 'WARNING', "
+        "'log_message': 'Telnet access! Use ssh instead'}, "
+        "{'log_level': 'INFO', "
+        "'log_message': 'User wil is connected'}], "
+        "42, ['Hi', 'five']]"
+    )
     numeric = NumericProcessor()
     text = TextProcessor()
     log = LogProcessor()
     data.register_processor(numeric)
     data.register_processor(text)
     data.register_processor(log)
-    
+
     stream = [
-    "Hello world",
-    [3.14, -1, 2.71],
-    [
-        {"log_level": "WARNING", "log_message": "Telnet access! Use ssh instead"},
-        {"log_level": "INFO", "log_message": "User wil is connected"},
-    ],
-    42,
-    ["Hi", "five"],
-]
+        "Hello world",
+        [3.14, -1, 2.71],
+        [
+            {"log_level": "WARNING", "log_message":
+             "Telnet access! Use ssh instead"},
+            {"log_level": "INFO", "log_message": "User wil is connected"},
+        ],
+        42,
+        ["Hi", "five"],
+    ]
     data.process_stream(stream)
     print("== DataStream statistics ==")
     data.print_processors_stats()
@@ -183,7 +198,7 @@ if __name__ == "__main__":
     print(" ")
     print("Send 3 processed data from each processor to a CVS plugin:")
     cvsdata = CSVExportPlugin()
-    
+
     data.print_processors_stats()
 
     print(" ")
@@ -194,28 +209,30 @@ if __name__ == "__main__":
     data.print_processors_stats()
     print(" ")
     print(" ")
-    print("Send another batch of data: [21m ['I love AI', 'LLMs are wonderful', 'Stay healthy], "
-    "[{'log_level' : 'ERROR', 'log_message': '500 server crash'}, "
-    "{'log_level': 'NOTICE', 'log_message': 'Certificate expires in 10 days}], "
-    "[32, 42, 64, 84, 128, 168], 'World hello]")
+    print("Send another batch of data: [21m ['I love AI', "
+          "'LLMs are wonderful', 'Stay healthy], "
+          "[{'log_level' : 'ERROR', 'log_message': '500 server crash'}, "
+          "{'log_level': 'NOTICE', 'log_message': '"
+          "Certificate expires in 10 days}], "
+          "[32, 42, 64, 84, 128, 168], 'World hello]")
     print(" ")
     print("== DataStream statistics ==")
     stream2 = [
-    [21],
-    ["I love AI", "LLMs are wonderful", "Stay healthy"],
-    [
-        {
-            "log_level": "ERROR",
-            "log_message": "500 server crash"
-        },
-        {
-            "log_level": "NOTICE",
-            "log_message": "Certificate expires in 10 days"
-        }
-    ],
-    [32, 42, 64, 84, 128, 168],
-    "World hello"
-]
+        [21],
+        ["I love AI", "LLMs are wonderful", "Stay healthy"],
+        [
+            {
+                "log_level": "ERROR",
+                "log_message": "500 server crash"
+            },
+            {
+                "log_level": "NOTICE",
+                "log_message": "Certificate expires in 10 days"
+            }
+        ],
+        [32, 42, 64, 84, 128, 168],
+        "World hello"
+    ]
     data.process_stream(stream2)
     data.print_processors_stats()
     print(" ")
