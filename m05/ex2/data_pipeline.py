@@ -15,11 +15,16 @@ class DataProcessor(ABC):
     def ingest(self, data: Any) -> None:
         ...
 
-    def output(self) -> tuple[int, str]:
-        valor = self.dados.pop(0)
-        rank_atual = self.rank
-        self.rank += 1
-        return (rank_atual, valor)
+    def output(self, nb: int) -> list[tuple[int, str]]:
+        resultado = []
+        for _ in range(nb):
+            if len(self.dados) == 0:
+                break
+            valor = self.dados.pop(0)
+            rank_atual = self.rank
+            self.rank += 1
+            resultado.append((rank_atual, valor))
+        return resultado
 
 class NumericProcessor(DataProcessor):
     def validate(self, data: Any) ->bool:
@@ -83,11 +88,11 @@ class LogProcessor(DataProcessor):
         else:
             texto = f"{data['log_level']}: {data['log_message']}"
             self.dados.append(texto)
-            
+
 class ExportPlugin(Protocol):
     def process_output(self, data: list[tuple[int, str]]) -> None:
         ...
-
+        
 class DataStream():
     def __init__ (self)->None:
             self.processors: list[DataProcessor] = []
@@ -176,3 +181,48 @@ if __name__ == "__main__":
     data.print_processors_stats()
     print(" ")
     print(" ")
+    print("Send 3 processed data from each processor to a CVS plugin:")
+    cvsdata = CSVExportPlugin()
+    
+    data.print_processors_stats()
+
+    print(" ")
+    print(" ")
+    print("== DataStream statistics ==")
+
+    data.output_pipeline(3, cvsdata)
+    data.print_processors_stats()
+    print(" ")
+    print(" ")
+    print("Send another batch of data: [21m ['I love AI', 'LLMs are wonderful', 'Stay healthy], "
+    "[{'log_level' : 'ERROR', 'log_message': '500 server crash'}, "
+    "{'log_level': 'NOTICE', 'log_message': 'Certificate expires in 10 days}], "
+    "[32, 42, 64, 84, 128, 168], 'World hello]")
+    print(" ")
+    print("== DataStream statistics ==")
+    stream2 = [
+    [21],
+    ["I love AI", "LLMs are wonderful", "Stay healthy"],
+    [
+        {
+            "log_level": "ERROR",
+            "log_message": "500 server crash"
+        },
+        {
+            "log_level": "NOTICE",
+            "log_message": "Certificate expires in 10 days"
+        }
+    ],
+    [32, 42, 64, 84, 128, 168],
+    "World hello"
+]
+    data.process_stream(stream2)
+    data.print_processors_stats()
+    print(" ")
+    print("Send 5 process data from each processor to a JSON plugin")
+    json = JSONExportPlugin()
+    data.output_pipeline(5, json)
+    print(" ")
+    print("== DataStream statistics ==")
+
+    data.print_processors_stats()
