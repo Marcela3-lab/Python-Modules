@@ -1,3 +1,5 @@
 from alchemy.grimoire import light_spellbook
 
-print(light_spellbook.light_spell_record("fire","fire, water"))
+print("=== Kaboom 0 ===")
+spell = light_spellbook.light_spell_record("Fantasy", "Earth wind and water")
+print(f"Testing record light spell: {spell}")

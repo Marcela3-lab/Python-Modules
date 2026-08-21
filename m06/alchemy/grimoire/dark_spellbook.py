@@ -1,12 +1,13 @@
-import dark_validator
+from .dark_validator import validate_ingredients
+
 
 def dark_spell_allowed_ingredients() -> list:
-    lista: list = ["bats","frogs","arsenic","eyball"]
-    return(lista)
+    lista: list = ["bats", "frogs", "arsenic", "eyeball"]
+    return (lista)
 
 
 def dark_spell_record(spell_name: str, ingredients: str) -> str:
-    res = dark_validator.validate_ingredients(ingredients)
-    if "VALID" in res:
-        return(f"Spell recorded: {spell_name} {ingredients}  - VALID")
-    return("IGREDIENT NOT FOUND!!")
+    res = validate_ingredients(ingredients)
+    if res.endswith("- VALID"):
+        return (f"Spell recorded: {spell_name} ({res})")
+    return (f"Spell rejected: {spell_name} ({res})")

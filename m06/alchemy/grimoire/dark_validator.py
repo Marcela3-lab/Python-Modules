@@ -1,8 +1,10 @@
-import dark_spellbook
+from .dark_spellbook import dark_spell_allowed_ingredients
+
 
 def validate_ingredients(ingredients: str) -> str:
-    ml = dark_spellbook.light_spell_allowed_ingredients()
-    for item in len(ml):
-        if ingredients.lower == item:
-            return(f"{item} VALID")
-    return (f"{item} INVALID")
+    allowed = dark_spell_allowed_ingredients()
+    ingredients_lower = ingredients.lower()
+    for item in allowed:
+        if item.lower() in ingredients_lower:
+            return (f"{ingredients_lower} - VALID")
+    return (f"{ingredients_lower} - INVALID")
