@@ -22,7 +22,7 @@ class NormalStrategy(BattleStrategy):
 
 class AggressiveStrategy():
     def is_valid(self, creature):
-        return isinstance(creature, capability.TransformCapability())
+        return isinstance(creature, capability.TransformCapability)
 
     def act(self, creature):
         if not self.is_valid(creature):
@@ -36,7 +36,7 @@ class AggressiveStrategy():
 
 class DefensiveStrategy():
     def is_valid(self, creature):
-        return isinstance(creature, capability.HealCapability())
+        return isinstance(creature, capability.HealCapability)
 
     def act(self, creature):
         if not self.is_valid(creature):
