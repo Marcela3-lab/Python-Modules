@@ -1,7 +1,7 @@
-from ex0 import FlameFactory, AquaFactory
+import ex0
 
 
-def test_factory(factory):
+def test_factory(factory) -> None:
     base = factory.creat_base()
     evolved = factory.creat_evolved()
 
@@ -12,7 +12,7 @@ def test_factory(factory):
     print(evolved.attack())
 
 
-def battle(factory1, factory2):
+def battle(factory1, factory2) -> None:
     creature1 = factory1.creat_base()
     creature2 = factory2.creat_base()
 
@@ -22,11 +22,14 @@ def battle(factory1, factory2):
     print(creature2.attack())
 
 
-flame_factory = FlameFactory()
-aqua_factory = AquaFactory()
+flame_factory = ex0.FlameFactory()
+aqua_factory = ex0.AquaFactory()
 
+print("Testing factory")
 test_factory(flame_factory)
 print()
+print("Testing factory")
 test_factory(aqua_factory)
 print()
+print("Testing battle")
 battle(flame_factory, aqua_factory)

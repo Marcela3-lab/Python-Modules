@@ -8,23 +8,23 @@ class BattleStrategy(ABC):
         ...
 
     @abstractmethod
-    def act(self, creature) -> bool:
+    def act(self, creature) -> str:
         ...
 
 
 class NormalStrategy(BattleStrategy):
-    def is_valid(self, creature):
+    def is_valid(self, creature) -> bool:
         return True
 
-    def act(self, creature):
+    def act(self, creature) -> str:
         return f"{creature.attack()}\n"
 
 
 class AggressiveStrategy():
-    def is_valid(self, creature):
+    def is_valid(self, creature) -> bool:
         return isinstance(creature, capability.TransformCapability)
 
-    def act(self, creature):
+    def act(self, creature) -> str:
         if not self.is_valid(creature):
             raise ValueError("Creature cannot use AggressiveStrategy")
         return (
@@ -35,10 +35,10 @@ class AggressiveStrategy():
 
 
 class DefensiveStrategy():
-    def is_valid(self, creature):
+    def is_valid(self, creature) -> bool:
         return isinstance(creature, capability.HealCapability)
 
-    def act(self, creature):
+    def act(self, creature) -> str:
         if not self.is_valid(creature):
             raise ValueError("Creature cannot use DefensiveStrategy")
         return (

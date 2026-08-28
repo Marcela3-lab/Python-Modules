@@ -12,7 +12,7 @@ aggressive = ex2.AggressiveStrategy
 defensive = ex2.DefensiveStrategy
 
 
-def battle(opponents):
+def battle(opponents) -> None:
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
     print()
@@ -46,14 +46,17 @@ opponents = [(flame_fac(), normal()), (heal_fac(), defensive())]
 battle(opponents)
 print()
 print("------------------------")
+print()
 print("Tournament 1 (error)")
 print("[ (Flameling+Normal), (Healing+Defensive) ]")
 opponents = [(flame_fac(), aggressive()), (heal_fac(), defensive())]
 battle(opponents)
+print()
 print("------------------------")
+print()
 print("Tournament 2 (multiple)")
 print("[ (Aquabub+Normal), (Healing+Defensive),"
-      "(Transform+Aggressive) ])")
+      "(Transform+Aggressive) ]")
 opponents = [(aqua_fac(), normal()), (heal_fac(),
              defensive()), (transf_fac(), aggressive())]
 battle(opponents)
