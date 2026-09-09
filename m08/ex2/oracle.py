@@ -9,6 +9,8 @@ except ImportError:
     sys.exit(1)
 
 load_dotenv()
+
+
 def load_configuration():
     config = {
         "MATRIX_MODE": os.environ.get("MATRIX_MODE", "development"),
@@ -18,6 +20,7 @@ def load_configuration():
         "ZION_ENDPOINT": os.environ.get("ZION_ENDPOINT", "not configured"),
     }
     return config
+
 
 def show_configuration(config):
     print("Configuration loaded:")
@@ -39,6 +42,7 @@ def show_configuration(config):
         print("Zion Network: Online")
     else:
         print("Zion Network: Offline (missing ZION_ENDPOINT)")
+
 
 def security_check():
     print()

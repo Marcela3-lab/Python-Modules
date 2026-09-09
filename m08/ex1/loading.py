@@ -3,13 +3,16 @@ import sys
 try:
     import pandas as pd
     import numpy as np
-    import matplotlib
+    import matplotlib as mb
+    import requests as rq
     import matplotlib.pyplot as plt
 except ImportError:
     pd = None
     np = None
-    matplotlib = None
     plt = None
+    rq = None
+    mb = None
+
 
 def check_dependencies():
     print("Checking dependencies:")
@@ -30,13 +33,23 @@ def check_dependencies():
         dependencies_ok = False
 
     try:
-        import matplotlib
-        print(f"[OK] matplotlib ({matplotlib.__version__}) - Visualization ready")
+        import requests as rq
+        print(f"[OK] request ({rq.__version__}"
+              "- Network access ready")
+    except ImportError:
+        print("[MISSING] matplotlib - Visualization unavailable")
+        dependencies_ok = False
+
+    try:
+        import matplotlib as mb
+        print(f"[OK] matplotlib ({mb.__version__}"
+              "- Visualization ready")
     except ImportError:
         print("[MISSING] matplotlib - Visualization unavailable")
         dependencies_ok = False
 
     return dependencies_ok
+
 
 def show_installation_instructions():
     print()
@@ -47,6 +60,7 @@ def show_installation_instructions():
     print()
     print("Or install using Poetry:")
     print("    poetry install")
+
 
 def explain_pip_vs_poetry():
     print()
@@ -61,11 +75,12 @@ def explain_pip_vs_poetry():
     print("  - Creates and manages virtual environments automatically")
     print("  - Locks exact versions automatically via poetry.lock")
 
+
 def generate_matrix_data(n_samples=100):
-    np.random.seed(97)
     tempo = np.arange(n_samples)
-    atividade_neural = np.random.normal(loc = 50, scale = 15, size = n_samples)
+    atividade_neural = np.random.normal(loc=50, scale=15, size=n_samples)
     return tempo, atividade_neural
+
 
 def create_dataframe(tempo, atividade_neural):
     dados = {
@@ -75,10 +90,12 @@ def create_dataframe(tempo, atividade_neural):
     df = pd.DataFrame(dados)
     return df
 
+
 def analyze_data(df):
     print("=== Matrix Data Analysis ===")
     print(df.describe())
     return df.describe()
+
 
 def analytics(df):
     plt.figure(figsize=(10, 5))
