@@ -1,17 +1,7 @@
 import sys
-
-try:
-    import pandas as pd
-    import numpy as np
-    import matplotlib as mb
-    import requests as rq
-    import matplotlib.pyplot as plt
-except ImportError:
-    pd = None
-    np = None
-    plt = None
-    rq = None
-    mb = None
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 
 def check_dependencies():
