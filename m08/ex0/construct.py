@@ -3,7 +3,7 @@ import os
 import site
 
 
-def is_env():
+def is_env() -> bool:
     return sys.prefix == sys.base_prefix
 
 
