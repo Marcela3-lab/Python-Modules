@@ -6,7 +6,7 @@ try:
     from dotenv import load_dotenv
 except ImportError as e:
     print(e)
-    print("Tente: pip install -r requirements.txt")
+    print("Try again: pip install -r requirements.txt")
     sys.exit(1)
 
 load_dotenv()
@@ -45,7 +45,7 @@ def show_configuration(config) -> None:
         print("Log Level (missing LOG LEVEL))")
 
     if config["ZION_ENDPOINT"] != "":
-        print("Zion Network: Online")
+        print(f"Zion Network: {config['ZION_ENDPOINT']}")
     else:
         print("Zion Network: Offline (missing ZION_ENDPOINT)")
 

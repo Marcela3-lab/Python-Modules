@@ -1,5 +1,3 @@
-import sys
-
 try:
     import pandas as pd
     print(f"[OK] pandas ({pd.__version__}) - Numerical computation ready")
@@ -7,21 +5,27 @@ try:
 except ImportError:
     print("[MISSING] pandas - Data manipulation unavailable")
     ex = 1
-try: 
+
+try:
     import numpy as np
+    import numpy.typing as npt
     print(f"[OK] numpy ({np.__version__}) - Numerical computation ready")
     ex = 0
-except ImportError: 
+
+except ImportError:
     print("[MISSING] numpy - Data manipulation unavailable")
     ex += 1
-try: 
+
+try:
     import matplotlib.pyplot as plt
     import matplotlib as mt
     print(f"[OK] matplotlib ({mt.__version__}) - Numerical computation ready")
     ex = 0
 except ImportError:
-        print("[MISSING] matplotlib - Visualization unavailable")
-        ex +=1
+    print("[MISSING] matplotlib - Visualization unavailable")
+    ex += 1
+
+
 if ex == 3:
     print()
     print("Missing dependencies detected!")
@@ -44,26 +48,37 @@ if ex == 3:
     print("  - Locks exact versions automatically via poetry.lock")
     exit(1)
 
-def generate_matrix_data(n_samples=100) -> tuple:
-    np.random.seed(97)
+
+def generate_matrix_data(
+    n_samples: int = 100,
+) -> tuple[npt.NDArray[np.int_], npt.NDArray[np.float64]]:
     tempo = np.arange(n_samples)
-    atividade_neural = np.random.normal(loc = 50, scale = 15, size = n_samples)
+    atividade_neural = np.random.normal(
+        loc=50,
+        scale=15,
+        size=n_samples,
+    )
     return tempo, atividade_neural
 
-def create_dataframe(tempo, atividade_neural) -> dict:
+
+def create_dataframe(
+    tempo: npt.NDArray[np.int_],
+    atividade_neural: npt.NDArray[np.float64],
+) -> pd.DataFrame:
     dados = {
         "tempo": tempo,
-        "atividade_neural": atividade_neural
+        "atividade_neural": atividade_neural,
     }
-    df = pd.DataFrame(dados)
-    return df
+    return pd.DataFrame(dados)
 
-def analyze_data(df) ->  pd.DataFrame:
+
+def analyze_data(df: pd.DataFrame) -> pd.DataFrame:
     print("=== Matrix Data Analysis ===")
     print(df.describe())
     return df.describe()
 
-def analytics(df) -> None:
+
+def analytics(df: pd.DataFrame) -> None:
     plt.figure(figsize=(10, 5))
     plt.plot(df["tempo"], df["atividade_neural"])
     plt.title("Matrix Neural Activity Over Time")
@@ -91,4 +106,4 @@ if __name__ == "__main__":
     analytics(df)
 
     print()
-    print("Aanalysis complete!")
+    print("Analysis complete!")
