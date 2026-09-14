@@ -1,5 +1,6 @@
 import sys
 import os
+from typing import Any
 
 try:
     from dotenv import load_dotenv
@@ -11,7 +12,7 @@ except ImportError as e:
 load_dotenv()
 
 
-def load_configuration() -> dict[str, any]:
+def load_configuration() -> dict[str, Any]:
     config = {
         "MATRIX_MODE": os.environ.get("MATRIX_MODE"),
         "DATABASE_URL": os.environ.get("DATABASE_URL"),
@@ -24,7 +25,7 @@ def load_configuration() -> dict[str, any]:
 
 def show_configuration(config) -> None:
     print("Configuration loaded:")
-    repr(os.environ.get("MATRIX_MODE"))
+    print(f"Mode: {config['MATRIX_MODE']}")
 
     if config["MATRIX_MODE"] == "production":
         print("Database: Connected to production instance")
