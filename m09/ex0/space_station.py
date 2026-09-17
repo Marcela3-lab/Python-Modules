@@ -14,7 +14,7 @@ class SpaceStation(BaseModel):
     note: Optional[str] = Field(default=None, max_length=200)
 
 
-def main():
+def main() -> None:
     station = SpaceStation(
         station_id="ISS001",
         name="International Space Station",
