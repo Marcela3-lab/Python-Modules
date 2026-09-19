@@ -33,7 +33,7 @@ class SpaceMission(BaseModel):
     budget_millions: float = Field(ge=1.0, le=10000.0)
 
     @model_validator(mode='after')
-    def validation_model(self):
+    def validation_model(self) -> "SpaceMission":
         if not self.mission_id.startswith("M"):
             raise ValueError("ID Must Start with M")
 
@@ -50,9 +50,9 @@ class SpaceMission(BaseModel):
             for member in self.crew:
                 if member.years_experience >= 5:
                     experienced += 1
-                if experienced < len(self.crew) * 0.5:
-                    raise ValueError("Long missions require at least 50% "
-                                     "experienced crew (5+ years)")
+            if experienced < len(self.crew) * 0.5:
+                raise ValueError("Long missions require at least 50% "
+                                 "experienced crew (5+ years)")
         if not all(member.is_active for member in self.crew):
             raise ValueError("All crew members must be active")
 
