@@ -4,7 +4,7 @@ from datetime import datetime
 from typing import List
 
 
-class Rank(str, Enum):
+class Rank(Enum):
     cadet = "cadet"
     officer = "officer"
     lieutenant = "lieutenant"
@@ -15,11 +15,11 @@ class Rank(str, Enum):
 class CrewMember (BaseModel):
     member_id: str = Field(min_length=3, max_length=10)
     name: str = Field(min_length=2, max_length=50)
-    rank: Rank
     age: int = Field(ge=18, le=80)
     specialization: str = Field(min_length=3, max_length=30)
     years_experience: int = Field(ge=0, le=50)
     is_active: bool = True
+    rank: Rank
 
 
 class SpaceMission(BaseModel):
@@ -73,7 +73,7 @@ if __name__ == "__main__":
         crew=[CrewMember(
             member_id="C001",
                     name="Sarah Connor",
-                    rank="commander",
+                    rank=Rank.commander,
                     age=45,
                     specialization="Mission Command",
                     years_experience=20,
@@ -81,7 +81,7 @@ if __name__ == "__main__":
             CrewMember(
                     member_id="C002",
                     name="John Smith",
-                    rank="lieutenant",
+                    rank=Rank.lieutenant,
                     age=35,
                     specialization="Navigation",
                     years_experience=10,
@@ -89,7 +89,7 @@ if __name__ == "__main__":
             CrewMember(
                     member_id="C003",
                     name="Alice Johnson",
-                    rank="officer",
+                    rank=Rank.officer,
                     age=30,
                     specialization="Engineering",
                     years_experience=6,
@@ -120,7 +120,7 @@ if __name__ == "__main__":
                 crew=[CrewMember(
                             member_id="C001",
                             name="Sarah Connor",
-                            rank="officer",
+                            rank=Rank.officer,
                             age=45,
                             specialization="Mission Command",
                             years_experience=20,
@@ -128,7 +128,7 @@ if __name__ == "__main__":
                     CrewMember(
                             member_id="C002",
                             name="John Smith",
-                            rank="lieutenant",
+                            rank=Rank.lieutenant,
                             age=35,
                             specialization="Navigation",
                             years_experience=10,
@@ -136,7 +136,7 @@ if __name__ == "__main__":
                     CrewMember(
                             member_id="C003",
                             name="Alice Johnson",
-                            rank="officer",
+                            rank=Rank.officer,
                             age=30,
                             specialization="Engineering",
                             years_experience=6,
